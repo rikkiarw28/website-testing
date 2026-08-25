@@ -87,7 +87,7 @@
     background:rgba(14, 18, 16, 0.31);
     backdrop-filter:blur(50px);
     border:1px solid var(--line);
-    border-radius:18px;
+    border-radius:40px;
     box-shadow:0 12px 32px rgba(0,0,0,0.35);
   }
   nav{
@@ -109,12 +109,23 @@
 
   /* ---- Hero ---- */
   .hero{
+    position:relative;
+    z-index:0;
     min-height:100vh;
     display:flex; flex-direction:column; justify-content:center;
     align-items:center;
     text-align:center;
     padding:100px 32px 60px;
     scroll-snap-align:start;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    z-index:-1;
+    left:0; right:0; bottom:0;
+    height:220px;
+    background:linear-gradient(to bottom, transparent, var(--section-dim));
+    pointer-events:none;
   }
   .hero-eyebrow{
     font-family:'JetBrains Mono', monospace;
@@ -127,8 +138,8 @@
   .hero h1{
     font-family:'Bricolage Grotesque', sans-serif;
     font-weight:800;
-    font-size:clamp(48px, 10vw, 108px);
-    line-height:0.98;
+    font-size:clamp(56px, 20vw, 200px);
+    line-height:0.82;
     letter-spacing:-0.01em;
   }
   .hero h1 .accent{
@@ -253,22 +264,7 @@
     font-style:italic;
   }
 
-  /* ---- Foundation map background ---- */
-  #foundation{position:relative; overflow:hidden;}
-  .archipelago{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:min(1500px, 170%);
-    opacity:0.16;
-    pointer-events:none;
-  }
-  .archipelago path{
-    fill:var(--brass);
-  }
-  .archipelago .accent-isle{
-    fill:var(--ember);
-  }
+  /* ---- Foundation ---- */
   .foundation-card{position:relative; z-index:1;}
   .foundation-card{
     background:transparent;
@@ -299,6 +295,7 @@
     padding:56px 0 44px;
     text-align:center;
     scroll-snap-align:end;
+    background:rgba(0,0,0,0.6);
   }
   footer .tagline{
     font-family:'Fraunces', serif;
@@ -327,8 +324,8 @@
   <nav>
     <div class="wordmark">Rikki Arwenda.</div>
     <div class="navlinks">
-      <a href="#about">About</a>
       <a href="#foundation">Foundation</a>
+      <a href="#about">About</a>
     </div>
   </nav>
 </header>
@@ -350,6 +347,21 @@
   </div>
   <div class="hero-actions">
     <a href="#foundation" class="btn btn-ghost">Arwenda Foundation</a>
+  </div>
+</section>
+
+<section id="foundation">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">A project still taking shape</span>
+      <h2>Arwenda Foundation</h2>
+    </div>
+    <div class="foundation-card reveal">
+      <span class="status-pill">The Story</span>
+      <p>I believe that life holds special magic for those who Dare to Dream. Unfortunately, though factors outside of their control make it hard for some people: things like when and where they were born and grew up, and who their parents.
+        That's why I want to use the resources I have to help more people live healthy and protuctive life to reach their dreams to reach their potential. Because lives have equal value. That's why I made the decision to help others.</p>
+      <p>This project isn’t fully active yet – as I am currently focused on strengthening my earning power, but it will be very soon, Insha Allah. If you are interested, please let me know. It would be great to collaborate with you.</p>
+    </div>
   </div>
 </section>
 
@@ -391,41 +403,6 @@
         <h3>Jatuh-Bangun Warren Buffett</h3>
         <div class="author">Ervina Pitasari</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="foundation">
-  <svg class="archipelago" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet">
-    <!-- Sumatra -->
-    <path d="M95,40 C118,32 138,48 148,80 C160,118 178,160 198,205 C202,215 195,222 185,216 C160,198 130,160 108,115 C95,88 78,65 78,52 C78,44 86,42 95,40 Z"/>
-    <!-- Java -->
-    <path d="M195,248 C240,238 285,240 330,250 C348,254 352,262 340,266 C295,276 245,274 205,262 C193,258 188,252 195,248 Z"/>
-    <!-- Bali & Nusa Tenggara chain -->
-    <path d="M348,268 C356,264 364,268 362,275 C360,281 350,282 346,277 C344,273 345,270 348,268 Z"/>
-    <path d="M368,272 C378,268 390,272 388,280 C386,286 372,287 366,281 C364,277 365,274 368,272 Z"/>
-    <path d="M398,276 C412,271 428,276 425,285 C422,292 404,293 396,286 C393,282 394,279 398,276 Z"/>
-    <!-- Kalimantan / Borneo -->
-    <path d="M275,95 C300,65 345,58 378,78 C408,96 418,135 405,170 C392,203 355,222 318,214 C282,206 255,180 252,145 C250,125 262,108 275,95 Z" class="accent-isle"/>
-    <!-- Sulawesi -->
-    <path d="M448,110 C458,88 478,80 490,96 C496,80 518,80 522,100 C536,92 552,102 548,120 C562,128 562,150 546,156 C550,178 534,200 514,192 C516,214 494,228 480,212 C458,220 442,204 448,184 C428,180 424,158 440,148 C426,136 432,116 448,110 Z" class="accent-isle"/>
-    <!-- Maluku islands -->
-    <path d="M562,150 C572,142 586,148 584,160 C582,170 566,172 559,163 C556,158 558,153 562,150 Z"/>
-    <path d="M588,175 C598,168 611,174 608,185 C605,194 590,196 583,188 C581,183 583,178 588,175 Z"/>
-    <path d="M578,205 C586,200 596,204 594,213 C592,220 580,222 574,216 C572,212 574,208 578,205 Z"/>
-    <!-- Papua -->
-    <path d="M660,150 C648,132 662,110 684,113 C676,98 692,82 712,88 C708,76 726,64 742,74 C760,64 782,70 788,88 C815,98 838,120 843,148 C848,172 835,196 810,206 C778,218 736,214 702,200 C678,190 662,172 660,150 Z" class="accent-isle"/>
-  </svg>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">A project still taking shape</span>
-      <h2>Arwenda Foundation</h2>
-    </div>
-    <div class="foundation-card reveal">
-      <span class="status-pill">The Story</span>
-      <p>I believe that life holds special magic for those who dare to dream. Unfortunately, factors outside of anyone’s control make it hard for some people to reach their potential: things like when they were born, who their parents, and where they grew up.</p>
-      <p>I wake up every day determined to use our resources to create a world where everyone has the opportunity to lead a healthy and productive life to reach their dreams. Most importantly, I believe this: All lives have equal value. That’s why I made the decision to help others.</p>
-      <p>This project isn’t fully active yet – as I am currently focused on strengthening my earning power, but it will be very soon, Insha Allah. If you are interested, please let me know. It would be great to collaborate with you.</p>
     </div>
   </div>
 </section>
