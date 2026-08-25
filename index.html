@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#161022">
+<meta name="color-scheme" content="dark">
+<title>Rikki Arwenda — Dare to Dream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Karla:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1610229b;
+    --panel:#342261;
+    --ink:#F1EDE4;
+    --brass:#f3e280;
+    --ember:#e79f03;
+    --muted:rgba(255, 255, 255, 0.85);
+    --line:rgba(241,237,228,0.12);
+    --card:#221A36;
+    --section-dim:rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{
+    background-color:#161022;
+    scroll-behavior:smooth;
+    scroll-snap-type:y proximity;
+  }
+  body{
+    min-height:100dvh;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Karla', sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:0 32px;}
+  a{color:inherit; text-decoration:none;}
+
+  /* ---- Animated gradient background ---- */
+  .gradient-bg{
+    position:fixed; inset:0; z-index:-1;
+    background:linear-gradient(125deg,
+      #161022 0%,
+      #513682 18%,
+      #31154c 38%,
+      #1D1332 55%,
+      #6e4a8f 72%,
+      #2a0c44 88%,
+      #161022 100%
+    );
+    background-size:280% 280%;
+    animation:gradientFlow 7s ease infinite;
+  }
+  @keyframes gradientFlow{
+    0%{ background-position:0% 30%; }
+    50%{ background-position:100% 70%; }
+    100%{ background-position:0% 30%; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gradient-bg{ animation:none; background-position:0% 30%; }
+  }
+
+  /* ---- Starfield (spans whole page) ---- */
+  .stars{
+    position:fixed; inset:0;
+    z-index:-1;
+    pointer-events:none;
+  }
+  .star{
+    position:absolute;
+    border-radius:50%;
+    background:var(--ink);
+    opacity:0.15;
+    animation:twinkle 2s ease-in-out infinite;
+  }
+  .star.gold{ background:var(--brass); }
+  @keyframes twinkle{
+    0%, 100%{ opacity:0.15; transform:scale(0.8); }
+    50%{ opacity:0.9; transform:scale(1.3); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .star{ animation:none; opacity:0.35; }
+  }
+
+  /* ---- Nav (floating) ---- */
+  header{
+    position:fixed; top:20px; left:50%;
+    transform:translateX(-50%);
+    width:calc(100% - 40px);
+    max-width:900px;
+    z-index:50;
+    background:rgba(14, 18, 16, 0.31);
+    backdrop-filter:blur(20px);
+    border:1px solid var(--line);
+    border-radius:40px;
+    box-shadow:0 12px 32px rgba(0,0,0,0.35);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+  }
+  .wordmark{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:-0.01em;
+  }
+  .navlinks{display:flex; gap:32px; font-size:13.5px; font-weight:600; color:var(--muted);}
+  .navlinks a:hover{color:var(--ink);}
+  @media (max-width:640px){
+    .navlinks{display:none;}
+    header{ width:fit-content; max-width:none; border-radius:24px; }
+    nav{ padding:8px 14px; }
+    .wordmark{ font-size:11px; }
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;
+    z-index:0;
+    min-height:100dvh;
+    display:flex; flex-direction:column; justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:100px 32px 60px;
+    scroll-snap-align:start;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    z-index:-1;
+    left:0; right:0; bottom:0;
+    height:220px;
+    background:linear-gradient(to bottom, transparent, var(--section-dim));
+    pointer-events:none;
+  }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:26px;
+  }
+  .hero h1{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    font-size:clamp(56px, 20vw, 200px);
+    line-height:0.82;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 .line-mask{
+    display:inline-block;
+    overflow:hidden;
+    vertical-align:top;
+    padding-bottom:0.08em;
+  }
+  .hero h1 .line-inner{
+    display:inline-block;
+    animation:lineReveal 1s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero h1 .line-mask:first-of-type .line-inner{ animation-delay:0.1s; }
+  .hero h1 .line-mask:last-of-type .line-inner{ animation-delay:0.32s; }
+  @keyframes lineReveal{
+    from{ transform:translateY(105%) rotate(4deg); opacity:0; }
+    to{ transform:translateY(0) rotate(0); opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero h1 .line-inner{ animation:none; }
+  }
+  .hero h1 .accent{
+    background:linear-gradient(90deg, var(--brass), var(--ember), var(--brass), var(--ember));
+    background-size:300% 100%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:accentShine 6s linear infinite;
+  }
+  @keyframes accentShine{
+    0%{ background-position:0% 50%; }
+    100%{ background-position:100% 50%; }
+  }
+  .hero p{
+    margin-top:28px;
+    max-width:480px;
+    color:var(--muted);
+    font-size:16.5px;
+    overflow-wrap:break-word;
+  }
+  .hero p, .hero .socials, .hero-actions{
+    animation-name:heroFadeUp;
+    animation-duration:0.9s;
+    animation-timing-function:cubic-bezier(.16,1,.3,1);
+    animation-fill-mode:backwards;
+  }
+  .hero p{ animation-delay:0.5s; }
+  .hero .socials{ animation-delay:0.45s; }
+  .hero-actions{ animation-delay:0.55s; }
+  @keyframes heroFadeUp{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero h1 .accent{ animation:none; }
+    .hero p, .hero .socials, .hero-actions{ animation:none; }
+  }
+  .hero-actions{
+    margin-top:40px;
+    display:flex; gap:14px; flex-wrap:wrap;
+    justify-content:center;
+  }
+  .btn{
+    font-weight:600;
+    font-size:14px;
+    padding:13px 26px;
+    border-radius:999px;
+    border:1px solid var(--line);
+  }
+  .btn-solid{
+    background:var(--brass);
+    color:var(--bg);
+    border-color:var(--brass);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink);
+  }
+  .socials{
+    margin-top:44px;
+    display:flex; gap:20px;
+    color:var(--muted);
+  }
+  .socials a{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px;
+    transition:color .2s ease, transform .2s ease;
+  }
+  .socials a svg{width:100%; height:100%;}
+  .socials a:hover{color:var(--ink); transform:translateY(-2px);}
+
+  /* ---- Section shell ---- */
+  section{padding:100px 0; border-top:1px solid transparent;}
+  section:not(.hero){
+    background:var(--section-dim);
+  }
+  #about, #books, #foundation{
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    scroll-snap-align:start;
+  }
+  #about .wrap, #books .wrap, #foundation .wrap{ width:100%; }
+  .section-head{margin-bottom:44px; max-width:600px;}
+  .section-head .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:14px;
+    display:block;
+    font-weight:500;
+  }
+  .section-head h2{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    font-size:clamp(28px, 3.6vw, 42px);
+  }
+
+  /* ---- About ---- */
+  .about-body{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:32px;
+    align-items:start;
+  }
+  .about-avatar{
+    width:96px; height:96px;
+    border-radius:50%;
+    overflow:hidden;
+    flex-shrink:0;
+    background:linear-gradient(135deg, var(--brass), var(--ember));
+  }
+  .about-avatar img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .about-body p{color:var(--muted); font-size:15.5px; margin-bottom:16px; max-width:560px;}
+  .about-body p:last-child{margin-bottom:0;}
+  @media (max-width:600px){
+    .about-body{grid-template-columns:1fr;}
+    #about{ align-items:flex-start; }
+  }
+
+  /* ---- Books ---- */
+  .book-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  @media (max-width:760px){ .book-grid{grid-template-columns:1fr;} }
+  .book-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px;
+  }
+  .book-spine{
+    width:34px; height:6px;
+    border-radius:4px;
+    margin-bottom:20px;
+  }
+  .book-card h3{font-size:16px; font-weight:700; margin-bottom:6px;}
+  .book-card .author{
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+  }
+
+  /* ---- Foundation ---- */
+  .foundation-card{position:relative; z-index:1;}
+  .foundation-card{
+    background:transparent;
+    border:none;
+    border-radius:20px;
+    padding:44px 0;
+  }
+  .foundation-card p{color:var(--muted); font-size:15.5px; margin-bottom:18px; max-width:620px;}
+  .foundation-card p:last-of-type{margin-bottom:0;}
+  .status-pill{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:500;
+    color:var(--bg);
+    background:linear-gradient(90deg, var(--brass), var(--ember));
+    padding:7px 16px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  #foundation .wrap{ text-align:center; padding-top:32px; }
+  #foundation .section-head{ margin-left:auto; margin-right:auto; margin-bottom:20px; }
+  #foundation .foundation-card{ padding-top:0; }
+  #foundation .foundation-card p{ margin-left:auto; margin-right:auto; }
+  .project-list{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+    max-width:620px;
+    margin:24px auto 0;
+    text-align:left;
+  }
+  @media (max-width:600px){ .project-list{grid-template-columns:1fr;} }
+  .project-item{
+    display:flex; align-items:center; gap:12px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 18px;
+  }
+  .project-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--brass);
+    flex-shrink:0;
+  }
+  .project-name{
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  @media (max-width:640px){
+    section{ padding:80px 0; }
+    #foundation .wrap{ padding-top:12px; }
+    #foundation .section-head{ margin-bottom:14px; }
+    .status-pill{ margin-bottom:14px; }
+    .foundation-card p{ font-size:14.5px; margin-bottom:12px; }
+    .project-list{ margin-top:14px; gap:8px; }
+    .project-item{ padding:10px 14px; }
+  }
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="gradient-bg"></div>
+<div class="stars"></div>
+
+<header>
+  <nav>
+    <div class="wordmark">Rikki Arwenda.</div>
+    <div class="navlinks">
+      <a href="#foundation">Foundation</a>
+      <a href="#about">About</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <h1><span class="line-mask"><span class="line-inner">Dare to</span></span><br><span class="line-mask"><span class="line-inner"><span class="accent">Dream</span></span></span></h1>
+  <p>Because life holds special magic <br> for those who Dare to Dream.</p>
+
+  <div class="socials">
+    <a href="https://twitter.com/rikkiarw" target="_blank" rel="noopener" aria-label="X (Twitter)">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.4 8.4L23 22h-6.9l-5.4-6.9L4 22H1l7.9-9L1 2h7l4.9 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/rikkiarwenda" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3a1.97 1.97 0 1 0 0 3.94A1.97 1.97 0 0 0 5.25 3ZM20.44 20h-3.37v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V20H9.67V8.5h3.24v1.57h.05c.45-.85 1.55-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V20Z"/></svg>
+    </a>
+    <a href="https://instagram.com/rikkiarw" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+  </div>
+  <div class="hero-actions">
+    <a href="#foundation" class="btn btn-ghost">Arwenda Foundation</a>
+  </div>
+</section>
+
+<section id="foundation">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">A project still taking shape</span>
+      <h2>Arwenda Foundation</h2>
+    </div>
+    <div class="foundation-card reveal">
+      <span class="status-pill">The Story</span>
+      <p>I believe that life holds special magic for those who Dare to Dream. Unfortunately, factors outside of anyone's control make it hard for some people: things like when and where they were born and grew up, and who their parents.
+        That's why I want to use my resources to help more people live healthy and productive life so they can find their potential. Because all lives have equal value.</p>
+      <p>This project isn’t fully active yet – as I am currently focused on strengthening my Capital, but it will be very soon, Insha Allah.</p>
+      <div class="project-list">
+        <div class="project-item">
+          <span class="project-num">💫</span>
+          <span class="project-name">Dare to Dream Academy</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🎓</span>
+          <span class="project-name">Beasiswa Arwenda</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🏥</span>
+          <span class="project-name">Healthcare for Everyone</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🍚</span>
+          <span class="project-name">Food for Everyone</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Rikki Arwenda In a nutshell</span>
+      <h2>Hanya manusia biasa</h2>
+    </div>
+    <div class="about-body reveal">
+      <div class="about-avatar"><img src="RA.jpeg" alt="Rikki Arwenda"></div>
+      <div>
+        <p>Dulu suka menggambar, tapi memilih memulai  kehidupan dengan terjun di dunia teknik dan sekarang terdampar di dunia industri farmasi.</p>
+        <p>Beberapa tahun terakhir ini babak belur dihajar overthinking berkepanjangan tentang pendidikan, pekerjaan, percintaan dan lain-lain. Huh, emang bener kata iklan Tri dulu, jadi orang gede menyenangkan tapi susah dijalanin.</p>
+        <p>Perjalanan ke depan tidak terlihat mudah. Tapi, life must go on, and the future is bright, and I can’t wait to see where it leads. Bismillah!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="books">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Recently read</h2>
+    </div>
+    <div class="book-grid reveal">
+      <div class="book-card">
+        <div class="book-spine" style="background:var(--brass);"></div>
+        <h3>Who Moved My Cheese?</h3>
+        <div class="author">Dr. Spencer Johnson</div>
+      </div>
+      <div class="book-card">
+        <div class="book-spine" style="background:var(--ember);"></div>
+        <h3>Revive Your Heart</h3>
+        <div class="author">Nouman Ali Khan</div>
+      </div>
+      <div class="book-card">
+        <div class="book-spine" style="background:var(--brass);"></div>
+        <h3>Jatuh-Bangun Warren Buffett</h3>
+        <div class="author">Ervina Pitasari</div>
+      </div>
+            <div class="book-card">
+        <div class="book-spine" style="background:var(--brass);"></div>
+        <h3>The Alchemist</h3>
+        <div class="author">Paulo Coelho</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  const starsContainer = document.querySelector('.stars');
+  if (starsContainer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const STAR_COUNT = 100;
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement('span');
+      star.className = 'star' + (Math.random() < 0.18 ? ' gold' : '');
+      const size = (Math.random() * 1.6 + 1).toFixed(1);
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.top = (Math.random() * 100).toFixed(1) + '%';
+      star.style.left = (Math.random() * 100).toFixed(1) + '%';
+      star.style.animationDuration = (Math.random() * 3 + 3).toFixed(1) + 's';
+      star.style.animationDelay = (Math.random() * 4).toFixed(1) + 's';
+      starsContainer.appendChild(star);
+    }
+  }
+</script>
+
+</body>
+</html>
