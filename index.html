@@ -51,7 +51,7 @@
       #161022 100%
     );
     background-size:280% 280%;
-    animation:gradientFlow 30s ease infinite;
+    animation:gradientFlow 7s ease infinite;
   }
   @keyframes gradientFlow{
     0%{ background-position:0% 30%; }
@@ -73,7 +73,7 @@
     border-radius:50%;
     background:var(--ink);
     opacity:0.15;
-    animation:twinkle 4s ease-in-out infinite;
+    animation:twinkle 2s ease-in-out infinite;
   }
   .star.gold{ background:var(--brass); }
   @keyframes twinkle{
@@ -92,7 +92,7 @@
     max-width:900px;
     z-index:50;
     background:rgba(14, 18, 16, 0.31);
-    backdrop-filter:blur(50px);
+    backdrop-filter:blur(20px);
     border:1px solid var(--line);
     border-radius:40px;
     box-shadow:0 12px 32px rgba(0,0,0,0.35);
@@ -111,7 +111,9 @@
   .navlinks a:hover{color:var(--ink);}
   @media (max-width:640px){
     .navlinks{display:none;}
-    header{ width:fit-content; max-width:none; }
+    header{ width:fit-content; max-width:none; border-radius:24px; }
+    nav{ padding:8px 14px; }
+    .wordmark{ font-size:11px; }
   }
 
   /* ---- Hero ---- */
@@ -149,11 +151,36 @@
     line-height:0.82;
     letter-spacing:-0.01em;
   }
+  .hero h1 .line-mask{
+    display:inline-block;
+    overflow:hidden;
+    vertical-align:top;
+    padding-bottom:0.08em;
+  }
+  .hero h1 .line-inner{
+    display:inline-block;
+    animation:lineReveal 1s cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero h1 .line-mask:first-of-type .line-inner{ animation-delay:0.1s; }
+  .hero h1 .line-mask:last-of-type .line-inner{ animation-delay:0.32s; }
+  @keyframes lineReveal{
+    from{ transform:translateY(105%) rotate(4deg); opacity:0; }
+    to{ transform:translateY(0) rotate(0); opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero h1 .line-inner{ animation:none; }
+  }
   .hero h1 .accent{
-    background:linear-gradient(90deg, var(--brass), var(--ember));
+    background:linear-gradient(90deg, var(--brass), var(--ember), var(--brass), var(--ember));
+    background-size:300% 100%;
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
+    animation:accentShine 6s linear infinite;
+  }
+  @keyframes accentShine{
+    0%{ background-position:0% 50%; }
+    100%{ background-position:100% 50%; }
   }
   .hero p{
     margin-top:28px;
@@ -161,6 +188,23 @@
     color:var(--muted);
     font-size:16.5px;
     overflow-wrap:break-word;
+  }
+  .hero p, .hero .socials, .hero-actions{
+    animation-name:heroFadeUp;
+    animation-duration:0.9s;
+    animation-timing-function:cubic-bezier(.16,1,.3,1);
+    animation-fill-mode:backwards;
+  }
+  .hero p{ animation-delay:0.5s; }
+  .hero .socials{ animation-delay:0.45s; }
+  .hero-actions{ animation-delay:0.55s; }
+  @keyframes heroFadeUp{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero h1 .accent{ animation:none; }
+    .hero p, .hero .socials, .hero-actions{ animation:none; }
   }
   .hero-actions{
     margin-top:40px;
@@ -198,7 +242,7 @@
 
   /* ---- Section shell ---- */
   section{padding:100px 0; border-top:1px solid transparent;}
-  section:not(.hero), footer{
+  section:not(.hero){
     background:var(--section-dim);
   }
   #about, #books, #foundation{
@@ -244,7 +288,10 @@
   }
   .about-body p{color:var(--muted); font-size:15.5px; margin-bottom:16px; max-width:560px;}
   .about-body p:last-child{margin-bottom:0;}
-  @media (max-width:600px){ .about-body{grid-template-columns:1fr;} }
+  @media (max-width:600px){
+    .about-body{grid-template-columns:1fr;}
+    #about{ align-items:flex-start; }
+  }
 
   /* ---- Books ---- */
   .book-grid{
@@ -296,27 +343,33 @@
   #foundation .section-head{ margin-left:auto; margin-right:auto; margin-bottom:20px; }
   #foundation .foundation-card{ padding-top:0; }
   #foundation .foundation-card p{ margin-left:auto; margin-right:auto; }
-
-  /* ---- Footer ---- */
-  footer{
-    border-top:1px solid transparent;
-    padding:56px 0 44px;
-    text-align:center;
-    scroll-snap-align:end;
-    background:rgba(0,0,0,0.6);
+  .project-list{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+    max-width:620px;
+    margin:24px auto 0;
+    text-align:left;
   }
-  footer .tagline{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:22px;
-    margin-bottom:18px;
+  @media (max-width:600px){ .project-list{grid-template-columns:1fr;} }
+  .project-item{
+    display:flex; align-items:center; gap:12px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 18px;
   }
-  footer .socials{justify-content:center;}
-  .copyright{
-    margin-top:32px;
+  .project-num{
     font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:rgba(241,237,228,0.4);
+    font-size:12px;
+    font-weight:600;
+    color:var(--brass);
+    flex-shrink:0;
+  }
+  .project-name{
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
   }
 
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
@@ -339,7 +392,7 @@
 </header>
 
 <section class="hero" style="border-top:none;">
-  <h1>Dare to<br><span class="accent">Dream</span></h1>
+  <h1><span class="line-mask"><span class="line-inner">Dare to</span></span><br><span class="line-mask"><span class="line-inner"><span class="accent">Dream</span></span></span></h1>
   <p>Because life holds special magic <br> for those who Dare to Dream.</p>
 
   <div class="socials">
@@ -367,8 +420,26 @@
     <div class="foundation-card reveal">
       <span class="status-pill">The Story</span>
       <p>I believe that life holds special magic for those who Dare to Dream. Unfortunately, factors outside of anyone's control make it hard for some people: things like when and where they were born and grew up, and who their parents.
-        That's why I want to use the resources I have to help more people live healthy and productive life to reach their potential. Because lives have equal value. That's why I made the decision to help others.</p>
-      <p>This project isn’t fully active yet – as I am currently focused on strengthening my earning power, but it will be very soon, Insha Allah. If you are interested, please let me know. It would be great to collaborate with you.</p>
+        That's why I want to use my resources to help more people live healthy and productive life so they can find their potential. Because all lives have equal value.</p>
+      <p>This project isn’t fully active yet – as I am currently focused on strengthening my Capital, but it will be very soon, Insha Allah.</p>
+      <div class="project-list">
+        <div class="project-item">
+          <span class="project-num">💫</span>
+          <span class="project-name">Dare to Dream Academy</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🎓</span>
+          <span class="project-name">Beasiswa Arwenda</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🏥</span>
+          <span class="project-name">Healthcare for Everyone</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">🍚</span>
+          <span class="project-name">Food for Everyone</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -376,15 +447,15 @@
 <section id="about">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">In a nutshell</span>
+      <span class="eyebrow">Rikki Arwenda In a nutshell</span>
       <h2>Hanya manusia biasa</h2>
     </div>
     <div class="about-body reveal">
       <div class="about-avatar">RA</div>
       <div>
-        <p>Dulu senang menggambar, tapi akhirnya memilih jalan yang berbeda — masuk ke dunia teknik, dan sekarang menekuni industri farmasi.</p>
-        <p>Beberapa tahun terakhir diwarnai banyak overthinking soal pendidikan, pekerjaan, hubungan, dan hal-hal lain yang bikin pusing. Ternyata benar kata orang, jadi dewasa itu menyenangkan sekaligus tidak mudah dijalani.</p>
-        <p>Jalan ke depan mungkin tidak terlihat mulus, tapi tidak apa-apa. Masa depan tetap cerah, dan saya tidak sabar melihat ke mana semua ini akan bermuara. Bismillah.</p>
+        <p>Dulu suka menggambar, tapi memilih memulai  kehidupan dengan terjun di dunia teknik dan sekarang terdampar di dunia industri farmasi.</p>
+        <p>Beberapa tahun terakhir ini babak belur dihajar overthinking berkepanjangan tentang pendidikan, pekerjaan, percintaan dan lain-lain. Huh, emang bener kata iklan Tri dulu, jadi orang gede menyenangkan tapi susah dijalanin.</p>
+        <p>Perjalanan ke depan tidak terlihat mudah. Tapi, life must go on, and the future is bright, and I can’t wait to see where it leads. Bismillah!</p>
       </div>
     </div>
   </div>
@@ -411,27 +482,15 @@
         <h3>Jatuh-Bangun Warren Buffett</h3>
         <div class="author">Ervina Pitasari</div>
       </div>
+            <div class="book-card">
+        <div class="book-spine" style="background:var(--brass);"></div>
+        <h3>The Alchemist</h3>
+        <div class="author">Paulo Coelho</div>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="tagline">Dare to Dream</div>
-    <div class="socials">
-      <a href="https://twitter.com/rikkiarw" target="_blank" rel="noopener" aria-label="X (Twitter)">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.4 8.4L23 22h-6.9l-5.4-6.9L4 22H1l7.9-9L1 2h7l4.9 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>
-      </a>
-      <a href="https://linkedin.com/in/rikkiarwenda" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3a1.97 1.97 0 1 0 0 3.94A1.97 1.97 0 0 0 5.25 3ZM20.44 20h-3.37v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V20H9.67V8.5h3.24v1.57h.05c.45-.85 1.55-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.18V20Z"/></svg>
-      </a>
-      <a href="https://instagram.com/rikkiarw" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
-      </a>
-    </div>
-    <div class="copyright">2026 Rikki Arwenda.</div>
-  </div>
-</footer>
 
 <script>
   const revealEls = document.querySelectorAll('.reveal');
