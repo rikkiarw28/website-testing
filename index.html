@@ -345,6 +345,14 @@
   #foundation .section-head{ margin-left:auto; margin-right:auto; margin-bottom:20px; }
   #foundation .foundation-card{ padding-top:0; }
   #foundation .foundation-card p{ margin-left:auto; margin-right:auto; }
+  .signature{
+    display:block;
+    max-width:160px;
+    width:100%;
+    height:auto;
+    margin:20px auto 0;
+    opacity:0.9;
+  }
   .project-list{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
@@ -356,7 +364,8 @@
   @media (max-width:600px){ .project-list{grid-template-columns:1fr;} }
   .project-item{
     display:flex; align-items:center; gap:12px;
-    background:var(--card);
+    background:rgba(14, 18, 16, 0.31);
+    backdrop-filter:blur(20px);
     border:1px solid var(--line);
     border-radius:12px;
     padding:14px 18px;
@@ -418,37 +427,37 @@
     </a>
   </div>
   <div class="hero-actions">
-    <a href="#foundation" class="btn btn-ghost">Arwenda Foundation</a>
+    <a href="#foundation" class="btn btn-ghost">See What the Dream is</a>
   </div>
 </section>
 
 <section id="foundation">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">A project still taking shape</span>
       <h2>Arwenda Foundation</h2>
     </div>
     <div class="foundation-card reveal">
-      <span class="status-pill">The Story</span>
+  
       <p>I believe that life holds special magic for those who Dare to Dream. Unfortunately, factors outside of anyone's control make it hard for some people: things like when and where they were born and grew up, and who their parents.
         That's why I want to use my resources to help more people live healthy and productive life so they can find their potential. Because all lives have equal value.</p>
       <p>This project isn’t fully active yet – as I am currently focused on strengthening my Capital, but it will be very soon, Insha Allah.</p>
+      <img src="TTD.png" alt="Ttd" class="signature">
       <div class="project-list">
         <div class="project-item">
-          <span class="project-num">💫</span>
-          <span class="project-name">Dare to Dream Academy</span>
-        </div>
-        <div class="project-item">
-          <span class="project-num">🎓</span>
+          <span class="project-num">1</span>
           <span class="project-name">Beasiswa Arwenda</span>
         </div>
         <div class="project-item">
-          <span class="project-num">🏥</span>
+          <span class="project-num">2</span>
           <span class="project-name">Healthcare for Everyone</span>
         </div>
         <div class="project-item">
-          <span class="project-num">🍚</span>
+          <span class="project-num">3</span>
           <span class="project-name">Food for Everyone</span>
+        </div>
+        <div class="project-item">
+          <span class="project-num">4</span>
+          <span class="project-name">Dare to Dream Academy</span>
         </div>
       </div>
     </div>
@@ -493,10 +502,15 @@
         <h3>Jatuh-Bangun Warren Buffett</h3>
         <div class="author">Ervina Pitasari</div>
       </div>
-            <div class="book-card">
-        <div class="book-spine" style="background:var(--brass);"></div>
+      <div class="book-card">
+        <div class="book-spine" style="background:var(--ember);"></div>
         <h3>The Alchemist</h3>
         <div class="author">Paulo Coelho</div>
+      </div>
+      <div class="book-card">
+        <div class="book-spine" style="background:var(--brass);"></div>
+        <h3>Atomic Habit</h3>
+        <div class="author">James Clear</div>
       </div>
     </div>
   </div>
